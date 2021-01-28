@@ -84,15 +84,19 @@ if (isset($_POST['login'])) {
         'username' => $username,
         'password' => $password
     ]);
-
+    session_unset();
     $_SESSION['login'] = $user['login'];
     $_SESSION['username'] = $user['username'];
-    if ($user['hak'] == "Admin") {
-        $_SESSION['hak'] = $user['hak'];
-        echo "<meta http-equiv='refresh' content='0; url=index.php'>";
-    } elseif ($user['hak'] == "Petugas") {
-        $_SESSION['hak'] = $user['hak'];
-        echo "<meta http-equiv='refresh' content='0; url=index.php'>";
+    $hak = strtolower($user['hak']);
+    switch ($hak) {
+        case 'admin':
+            $_SESSION['hak'] = $hak;
+            echo "<meta http-equiv='refresh' content='0; url=$hak/index.php'>";
+            break;
+        case 'petugas':
+            $_SESSION['hak'] = $hak;
+            echo "<meta http-equiv='refresh' content='0; url=$hak/index.php'>";
+            break;
     }
 }
 

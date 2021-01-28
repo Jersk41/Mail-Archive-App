@@ -1,5 +1,6 @@
 <?php
 
+define('BASE', dirname(__FILE__));
 /**
  * class koneksi class
  */
@@ -88,7 +89,7 @@ class Db
                 }
                 return $rows;
             };
-            return $this->conn->error;
+            return $this->conn->affected_rows;
         }
     }
 
@@ -181,7 +182,7 @@ class Db
                         echo $hak;
                         $user = [
                             'login' => true,
-                            'username' => password_hash($row['username'], PASSWORD_DEFAULT),
+                            'username' => $row['username'],
                             'hak' => $row['hak'],
                         ];
                         return $user;
@@ -189,29 +190,11 @@ class Db
                         echo $hak;
                         $user = [
                             'login' => true,
-                            'username' => password_hash($row['username'], PASSWORD_ARGON2I),
+                            'username' => $row['username'],
                             'hak' => $row['hak'],
                         ];
                         return $user;
                     }
-                    // if (password_verify($account['password'], $row['password'])) {
-                    //     $hak = $row['hak'];
-                    //     // var_dump($row['password']);
-                    //     if ($hak == "admin") {
-                    //         $user = [
-                    //             'login' => true,
-                    //             'username' => password_hash($row['username'], PASSWORD_ARGON2I),
-                    //             'hak' => password_hash($row['hak'], PASSWORD_ARGON2I),
-                    //         ];
-                    //         return $user;
-                    //     } elseif ($hak == "petugas") {
-                    //         $user = [
-                    //             'login' => true,
-                    //             'username' => password_hash($row['username'], PASSWORD_ARGON2I),
-                    //             'hak' => password_hash($row['hak'], PASSWORD_ARGON2I),
-                    //         ];
-                    //         return $user;
-                    //     }
                 }
             }
             $stmt->close();
@@ -226,7 +209,7 @@ class Db
         $username = strtolower(stripslashes($data['username']));
         $password1 = $data['password1'];
         $password2 = $data['password2'];
-        echo "$password1<br>$password2<br>";
+        // echo "$password1<br>$password2<br>";
         $hak = htmlspecialchars($_POST['hak']);
 
         // jika password dan konfirmasi password sama maka ini dijalankan
@@ -267,6 +250,7 @@ class Db
             return true;
         }
     }
+
     public function sql()
     {
         return $this->conn;
