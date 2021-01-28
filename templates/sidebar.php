@@ -32,9 +32,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fa fa-report fa-sm"></i>
-                    Laporan
+                <a class="nav-link" href="/ManagemenSurat/logout.php">
+                    <i class="fa fa-sign-out fa-sm"></i>
+                    Logout
                 </a>
             </li>
         </ul>
